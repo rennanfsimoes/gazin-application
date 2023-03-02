@@ -1,7 +1,7 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: nginx-deployment
+  name: flotix/api-rest-ovh-iot
 spec:
   selector:
     matchLabels:
@@ -16,4 +16,9 @@ spec:
       - name: nginx
         image: nginx:1.16.1 
         ports:
-        - containerPort: 80
+        - containerPort: 81
+    env:
+      - name: TOKEN_ID
+        value: "foo"
+      - name: TOKEN_KEY
+        value: "bar"
