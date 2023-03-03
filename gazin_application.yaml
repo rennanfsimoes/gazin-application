@@ -61,4 +61,4 @@ spec:
         - mountPath: /etc/nginx/ssl
           name: secret-volume
         - mountPath: /etc/nginx/conf.d
-          name: configmap-volume      
+          name: configmap-volume
