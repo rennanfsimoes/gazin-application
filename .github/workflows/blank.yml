@@ -6,12 +6,17 @@ on:
     branches: [ "main" ]
   workflow_dispatch:
 jobs:
-  build:
+  workflow-command-job:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3
       - name: Run application
         run: |
+          curl "https://awscli.amazonaws.com/awscli-exe-linux-x86_64.zip" -o "awscliv2.zip",
+          unzip awscliv2.zip,
+          ./aws/install,
+          aws eks --region $(terraform output -raw region) update-kubeconfig --name $(terraform output -raw cluster_name),
+          kubectl cluster-info,
           kubectl apply -f gazin_application.yaml,
           kubectl apply -f gazin_service.yaml,
           kubectl apply -f gazin_ingress.yaml.
