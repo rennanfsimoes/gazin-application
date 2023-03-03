@@ -12,7 +12,7 @@ jobs:
       - uses: actions/checkout@v3
       - name: Run application
         run: |
-          aws eks --region $(terraform output -raw region) update-kubeconfig --name $(terraform output -raw cluster_name),
+          aws eks --region $(terraform output -raw region) update-kubeconfig --name $(terraform output -raw cluster_name)
           kubectl cluster-info,
           kubectl apply -f gazin_application.yaml,
           kubectl apply -f gazin_service.yaml,
