@@ -19,6 +19,7 @@
 #           kubectl cluster-info,
 #           kubectl apply -f gazin_application.yaml,
 #           kubectl apply -f gazin_service.yaml,
+#           kubectl apply -f gazin_hpa.yaml,
 #           kubectl apply -f gazin_ingress.yaml.
 
 name: Kubectl Action
