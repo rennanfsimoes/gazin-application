@@ -1,32 +1,64 @@
+# apiVersion: apps/v1
+# kind: Deployment
+# metadata:
+#   name: api-rest-ovh-iot
+# spec:
+#   selector:
+#     matchLabels:
+#       app: nginx
+#   replicas: 2
+#   template:
+#     metadata:
+#       labels:
+#         app: nginx
+#     spec:
+#       containers:
+#       - name: nginx
+#         image: nginx:1.16.1
+#         env:
+#         - name: TOKEN_ID
+#           value: "foo"
+#         - name: TOKEN_KEY
+#           value: "bar"        
+#         resources:
+#             limits:
+#               cpu: 200m
+#               memory: 256Mi
+#             requests:
+#               cpu: 100m
+#               memory: 200Mi 
+#         ports:
+#         - containerPort: 81
+
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: api-rest-ovh-iot
+  name: nginx
 spec:
   selector:
     matchLabels:
-      app: nginx
-  replicas: 2
+      run: nginx
+  replicas: 1
   template:
     metadata:
       labels:
-        app: nginx
+        run: nginx
     spec:
+      volumes:
+      - name: secret-volume
+        secret:
+          secretName: nginxsecret
+      - name: configmap-volume
+        configMap:
+          name: nginxconfigmap
       containers:
-      - name: nginx
-        image: nginx:1.16.1
-        env:
-        - name: TOKEN_ID
-          value: "foo"
-        - name: TOKEN_KEY
-          value: "bar"        
-        resources:
-            limits:
-              cpu: 200m
-              memory: 256Mi
-            requests:
-              cpu: 100m
-              memory: 200Mi 
+      - name: nginxhttps
+        image: bprashanth/nginxhttps:1.0
         ports:
-        - containerPort: 81
-      
+        - containerPort: 443
+        - containerPort: 80
+        volumeMounts:
+        - mountPath: /etc/nginx/ssl
+          name: secret-volume
+        - mountPath: /etc/nginx/conf.d
+          name: configmap-volume      
