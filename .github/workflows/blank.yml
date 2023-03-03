@@ -21,7 +21,7 @@
 #           kubectl apply -f gazin_service.yaml,
 #           kubectl apply -f gazin_ingress.yaml.
 
-ame: Kubectl Action
+name: Kubectl Action
 
 on:
   workflow_dispatch:
